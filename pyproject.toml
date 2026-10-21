@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "concept-xai"
+version = "0.1.0"
+description = "A lightweight, interpretable image classification and audit prototype powered by modular geometric concept features and XAI."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "scikit-learn",
+    "torch",
+    "torchvision",
+    "tqdm",
+    "pillow",
+]
+
+[project.scripts]
+cxai = "cxai.main:cli"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cxai"]

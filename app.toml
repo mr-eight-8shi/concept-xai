@@ -1,0 +1,15 @@
+[app]
+# Path to the directory storing datasets such as MNIST
+dataset_dir = "dataset"
+
+# Path to the directory where log files are stored
+log_dir = "log"
+
+# Path to the working space and output directory (checkpoints, JSON logs, and visual assets)
+space_dir = "space"
+
+# Maximum training samples (-1 or 0 for full dataset like 60,000, or a specific limit like 10000)
+max_train_samples = -1
+
+# Maximum test samples (-1 or 0 for full dataset like 10,000, or a specific limit like 2000)
+max_test_samples = -1
