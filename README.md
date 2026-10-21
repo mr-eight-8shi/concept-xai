@@ -1,5 +1,5 @@
 # Concept XAI: Concept-Embedded Explainable AI Model
-<img width="890" height="475" alt="grid_batch_010" src="https://github.com/user-attachments/assets/69d6aac7-9401-4f3c-8689-777c3f5d646e" />
+<img width="890" height="475" alt="Concept XAI" src="https://github.com/user-attachments/assets/4cf97856-f4b2-44bd-9384-bdcd00cb1249" />
 
 This is a prototype implementation of a Concept-Embedded Explainable AI (XAI) model designed to solve the ultimate dilemma of conventional deep learning: "We know *Where* it looked, but we don't know *What* it saw."
 
@@ -7,7 +7,8 @@ While achieving a 91% test accuracy on the MNIST dataset, this model combines ba
 
 ## 💡 Background & Motivation
 In mission-critical fields such as medical diagnosis and infrastructure/machinery failure detection, applying black-box deep learning models directly is unacceptable due to the high risk of misclassification.
-- Limitations of Conventional DL: While techniques like Grad-CAM can show where the image was observed, there is no direct mechanism to decode whether the extracted features correspond to meaningful shapes (What). Even with standard DL where BP identifies important weight positions, the exact semantic meaning of those weights remains unknown.
+- Limitations of Conventional DL: While techniques like Grad-CAM can show where the image was observe<img width="890" height="475" alt="grid_batch_001" src="https://github.com/user-attachments/assets/6f4484cb-944a-4adc-b06d-70b86ce76210" />
+d, there is no direct mechanism to decode whether the extracted features correspond to meaningful shapes (What). Even with standard DL where BP identifies important weight positions, the exact semantic meaning of those weights remains unknown.
 - Black-box Internal Reasoning: Traditionally, the internal logical process of deep learning—such as determining that an image represents the digit "1" because it contains two consecutive vertical bars—has been completely opaque to human observers.
 
 ## Core Approach & Key Findings
@@ -227,7 +228,7 @@ Mapping & Exporting: 100%|██████████████████
 
 [日本語版Readme]
 # Concept XAI: 概念埋め込み型・解釈可能AIモデル
-<img width="890" height="475" alt="grid_batch_010" src="https://github.com/user-attachments/assets/dc0fbc90-a398-426e-a339-7d4b6f3e8b51" />
+<img width="890" height="475" alt="Concept XAI" src="https://github.com/user-attachments/assets/4cf97856-f4b2-44bd-9384-bdcd00cb1249" />
 
 従来のディープラーニングが抱える最大のジレンマである「Where?（どこを見たか）は分かっても、What?（何を見たのか）が分からない」というブラックボックス問題を解決するための、幾何学的概念埋め込み型・解釈可能AI（XAI）のプロトタイプ実装です。
 
