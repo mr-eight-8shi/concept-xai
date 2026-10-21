@@ -17,8 +17,9 @@ By placing a "Geometric Feature Extraction Layer (Concept Embedding Layer)" as t
 By embedding pre-trained concepts and linking them with inference-time gradients, we successfully decoded the previously invisible internal reasoning process of the model.
 Our evaluation revealed that the AI does not simply look at the image holistically; rather, it identifies digits based on combinations of a few local features (geometric primitives). For instance, when classifying the digit "1," the model internally captures elements like "multiple vertical bars forming a stroke," visually proving that the AI performs structural cognition and reasoning much closer to humans.
 
-### 2. New Possibilities for Explainable AI (XAI)
+### ### 2. New Possibilities for Explainable AI (XAI) and High Efficiency
 This approach completely translates extracted features into human-interpretable geometric concepts (lines, crosses, X-shapes, L-shapes, etc.), demonstrating the powerful potential that embedding pre-trained concepts directly into models can successfully bridge high performance and true explainability.
+Furthermore, the Layer 1 geometric filters and dictionary models are extremely compact (with total checkpoints amounting to only a few hundred kilobytes), featuring a highly efficient footprint. This allows the system to achieve strong interpretability and practical accuracy without requiring massive parameters or heavy computing resources, making it suitable even for edge devices and resource-constrained environments.
 
 ## 🏗️ Architecture Overview
 <code>
@@ -243,8 +244,9 @@ Mapping & Exporting: 100%|██████████████████
 モデル内にあらかじめ学習済みの概念を埋め込み、推論時の勾配と結びつけることで、これまで不可視だったモデル内の推論プロセスを完全に解読することに成功しました。
 検証の結果、本AIは画像全体をぼんやりと見るのではなく、「画像の中にある数個の局所的な特徴（幾何学パーツ）の組み合わせ」から数字を言い当てていることが明らかになりました。例えば、数字の「1」を判定する際、「縦棒が複数並んでいる（またはストロークが構成されている）」という要素をモデル自身が内部で捉えて推論していることが視覚的に証明され、AIが人間により近い思考や構造的認知を行っていることが分かります。
 
-### 2. 説明可能なAI（XAI）の新たな可能性
+### 2.  説明可能なAI（XAI）の新たな可能性と軽量性
 このアプローチにより、抽出された特徴量を人の目で見える「幾何学的概念（直線、十字、バツ、L字等）」に完全に翻訳することが可能となり、「モデル内に学習済みの概念を埋め込むことで、高精度と説明可能なAI（XAI）が十分に構築可能である」という強力な可能性を示しています。
+さらに、第1層の幾何学フィルターや辞書モデルは非常にコンパクト（チェックポイント全体でも数百KB程度）に収まっており、巨大なパラメータやリソースを必要としない軽量性を兼ね備えています。これにより、エッジデバイスや限られた計算資源の環境であっても、高い解釈性と実用的な精度を無理なく両立させれると見込みます。
 
 ## 🏗️ アーキテクチャ概要
 <code>
