@@ -20,17 +20,16 @@ Our evaluation revealed that the AI does not simply look at the image holistical
 This approach completely translates extracted features into human-interpretable geometric concepts (lines, crosses, X-shapes, L-shapes, etc.), demonstrating the powerful potential that embedding pre-trained concepts directly into models can successfully bridge high performance and true explainability.
 
 ## 🏗️ Architecture Overview
+<code>
 [Input Image: 28x28]
-       │
-       ▼ (Dynamic Patch Extraction: unfold)
+↓ (Dynamic Patch Extraction: unfold)
 [Layer 1: Geometric Feature Extraction Layer (Pre-trained & Fixed)]
-       │ (16-32 dim Spatial Concept Map)
-       ▼
+↓ (16-32 dim Spatial Concept Map)
 [Layer 2: Spatial Concept Processing Block (Spatial Concept Network)]
-       │
-       ▼
+↓
 [Output: Classification & XAI Automated Audit (Why / Because)]
-
+</code>
+       
 ### 1. Layer 1: Geometric Filters & Concept Dictionary (Pre-trained & Fixed Base)
 Instead of letting the model learn black-box features freely, it uses filter groups that universally extract predefined, refined geometric and topological concepts.
 #### Input Size: $7 \times 7 \times 1$ patch
@@ -54,6 +53,7 @@ By analyzing spatial gradients obtained from backward propagation (BP) during in
 - Detailed Metadata (JSON): Fully records the coordinates of each detected bounding box, maximum gradient contribution, Top-3 concept labels, and their confidence scores (Softmax probabilities).
 
 ## 📁 Directory Structure
+<code>
 CXAI-Model
 │   app.toml
 │   pyproject.toml
@@ -74,6 +74,7 @@ CXAI-Model
             ├── gnn_main_model_helper.py
             ├── gnn_preset_model.py
             └── mnist_dataloader.py
+</code>
 
 ## 🚀 Usage (CLI Menu Execution)
 This system can be easily run from the repository root using an interactive CLI menu or command-line arguments.
@@ -87,6 +88,7 @@ run_cxai.bat
 ### 2. Interactive Menu
 Once launched, choose an option to execute step-by-step:
 
+<code>
 =================================================================
     Concept XAI - MNIST Step-by-Step Verification System
 =================================================================
@@ -99,7 +101,8 @@ Once launched, choose an option to execute step-by-step:
     [q] Quit
 =================================================================
 Enter choice:
-
+</code>
+       
 - [1]: Pre-train geometric feature filters and concept dictionaries
 - [2]: Train the MNIST integrated model
 - [3]: Test and evaluate the MNIST classification model (achieves 91% accuracy)
@@ -113,6 +116,7 @@ Enter choice:
 
 ## Execution result
 ### Geometric Concept Model Training
+<code>
 🚀 [Geometric Train] Starting training with 10 Clean Geometric Concepts (50 epochs)...
 📁 Saved 10 centralized base concept reference images (5x enlarged) to: D:\workspace\CXAI-Model\space\label_image
   - Total samples (augmented): 624
@@ -149,8 +153,10 @@ Epoch [50/50] Loss: 0.1369 | Train Acc: 95.28% | Val Acc: 95.74%
   l_shape_dr  ==>  misclassified as  horizontal_line  (1 times)
 ✅ Geometric filter saved to: D:\workspace\CXAI-Model\space\checkpoint_geometric_filter.pth
 ✅ Concept dictionary model saved to: D:\workspace\CXAI-Model\space\checkpoint_concept_dictionary.pth
+</code>
 
 ## MNIST Integrated Model Training
+<code>
 Loading Training dataset...
 Data loaded successfully (Total samples: 60000, Shape: 28x28)
 Loading Test dataset...
@@ -174,8 +180,10 @@ Epoch [10/10]: 100%|████████████████████
 👉 Epoch 10 Completed | Loss: 0.5097 | Accuracy: 83.86%
 ✅ Integrated classification model saved to: D:\workspace\CXAI-Model\space\checkpoint_mnist_spatial_nn.pth
 [2026/10/21 21:55:00] [INFO] === [MNIST Classification Model Training] Completed ===
-
+</code>
+       
 ## MNIST Model Testing & Evaluation
+<code>
 Loading Training dataset...
 Data loaded successfully (Total samples: 60000, Shape: 28x28)
 Loading Test dataset...
@@ -197,8 +205,10 @@ Evaluating: 100%|█████████████████████
   Digit 8 :  81.21%  (974 samples)
   Digit 9 :  89.59%  (1009 samples)
 [2026/10/21 22:03:07] [INFO] === [MNIST Classification Model Testing] Completed ===
+</code>
 
 ## CXAI Model Thought Process Visualization
+<code>
 🧹 Cleared Output directory: D:\workspace\CXAI-Model\space\output
 Loading Training dataset...
 Data loaded successfully (Total samples: 60000, Shape: 28x28)
@@ -210,9 +220,9 @@ Mapping & Exporting:   2%|▉                                                   
 Mapping & Exporting:   3%|█▋                                                         | 28/1000 [00:00<00:27, 35.07it/s]  🖼️ Flushed 10-item grid image: D:\workspace\CXAI-Model\space\output\grid_batch_003.png
  * * * *
 Mapping & Exporting: 100%|█████████████████████████████████████████████████████████| 1000/1000 [00:26<00:00, 38.39it/s]
+</code>
 
-
-============================================
+[日本語版Readme]
 # Concept XAI: 概念埋め込み型・解釈可能AIモデル
 
 従来のディープラーニングが抱える最大のジレンマである「Where?（どこを見たか）は分かっても、What?（何を見たのか）が分からない」というブラックボックス問題を解決するための、幾何学的概念埋め込み型・解釈可能AI（XAI）のプロトタイプ実装です。
@@ -235,6 +245,7 @@ Mapping & Exporting: 100%|██████████████████
 このアプローチにより、抽出された特徴量を人の目で見える「幾何学的概念（直線、十字、バツ、L字等）」に完全に翻訳することが可能となり、「モデル内に学習済みの概念を埋め込むことで、高精度と説明可能なAI（XAI）が十分に構築可能である」という強力な可能性を示しています。
 
 ## 🏗️ アーキテクチャ概要
+<code>
 [入力画像: 28x28]
        │
        ▼ (動的パッチ切り出し: unfold)
@@ -245,7 +256,8 @@ Mapping & Exporting: 100%|██████████████████
        │
        ▼
 [出力: クラス分類 ＆ XAI自動監査 (Why / Because)]
-
+</code>
+       
 ### 1. 第1層：幾何学フィルターと概念辞書（事前学習・固定ベース）
 任意の自由な特徴をブラックボックスに学習させるのではなく、あらかじめ定義された専門的な幾何学的・トポロジカル概念を汎用的に抽出するフィルター群を使用します。
 #### 入力サイズ: $7 \times 7 \times 1$ パッチ
@@ -269,6 +281,7 @@ Mapping & Exporting: 100%|██████████████████
 - 詳細メタデータ（JSON）: 各検出ボックスの座標、最大勾配寄与度、Top-3概念ラベルとその信頼度（Softmax確率）を完全記録。
 
 ## 📁 ディレクトリ構成
+<code>
 CXAI-Model
 │   app.toml
 │   pyproject.toml
@@ -289,6 +302,7 @@ CXAI-Model
             ├── gnn_main_model_helper.py
             ├── gnn_preset_model.py
             └── mnist_dataloader.py
+</code>
 
 ## 🚀 使い方（CLIメニューによる簡単実行）
 本システムは、リポジトリルートから対話型CLIメニューまたはコマンド引数で手軽に実行できます。
@@ -302,6 +316,7 @@ run_cxai.bat
 ### 2. インターラクティブメニュー
 メニューが起動したら、番号を選んでステップ・バイ・ステップで実行可能です。
 
+<code>
 =================================================================
     Concept XAI - MNIST Step-by-Step Verification System
 =================================================================
@@ -314,7 +329,7 @@ run_cxai.bat
     [q] Quit - Exit Application
 =================================================================
 Enter choice:
-
+</code>
 - [1]: 幾何学特徴フィルターと概念辞書の事前学習
 - [2]: MNIST統合モデルのトレーニング
 - [3]: MNIST分類モデルのテスト評価（精度91%達成）
@@ -329,6 +344,7 @@ Enter choice:
 
 ## 実行結果
 ### 概念モデル構築
+<code>
 🚀 [Geometric Train] Starting training with 10 Clean Geometric Concepts (50 epochs)...
 📁 Saved 10 centralized base concept reference images (5x enlarged) to: D:\workspace\CXAI-Model\space\label_image
   - Total samples (augmented): 624
@@ -365,8 +381,10 @@ Epoch [50/50] Loss: 0.1369 | Train Acc: 95.28% | Val Acc: 95.74%
   l_shape_dr  ==>  misclassified as  horizontal_line  (1 times)
 ✅ Geometric filter saved to: D:\workspace\CXAI-Model\space\checkpoint_geometric_filter.pth
 ✅ Concept dictionary model saved to: D:\workspace\CXAI-Model\space\checkpoint_concept_dictionary.pth
+</code>
 
 ## MNISTの学習
+<code>
 Loading Training dataset...
 Data loaded successfully (Total samples: 60000, Shape: 28x28)
 Loading Test dataset...
@@ -390,8 +408,10 @@ Epoch [10/10]: 100%|████████████████████
 👉 Epoch 10 Completed | Loss: 0.5097 | Accuracy: 83.86%
 ✅ Integrated classification model saved to: D:\workspace\CXAI-Model\space\checkpoint_mnist_spatial_nn.pth
 [2026/10/21 21:55:00] [INFO] === [MNIST Classification Model Training] Completed ===
-
+</code>
+       
 ## MNISTの推論
+<code>
 Loading Training dataset...
 Data loaded successfully (Total samples: 60000, Shape: 28x28)
 Loading Test dataset...
@@ -413,8 +433,10 @@ Evaluating: 100%|█████████████████████
   Digit 8 :  81.21%  (974 samples)
   Digit 9 :  89.59%  (1009 samples)
 [2026/10/21 22:03:07] [INFO] === [MNIST Classification Model Testing] Completed ===
+</code>
 
 ## CXAIモデルの思考の可視化
+<code>
 🧹 Cleared Output directory: D:\workspace\CXAI-Model\space\output
 Loading Training dataset...
 Data loaded successfully (Total samples: 60000, Shape: 28x28)
@@ -426,3 +448,4 @@ Mapping & Exporting:   2%|▉                                                   
 Mapping & Exporting:   3%|█▋                                                         | 28/1000 [00:00<00:27, 35.07it/s]  🖼️ Flushed 10-item grid image: D:\workspace\CXAI-Model\space\output\grid_batch_003.png
 ・・・
 Mapping & Exporting: 100%|█████████████████████████████████████████████████████████| 1000/1000 [00:26<00:00, 38.39it/s]
+</code>
