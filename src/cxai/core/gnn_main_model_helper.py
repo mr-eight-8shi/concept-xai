@@ -11,7 +11,8 @@ from PIL import Image, ImageDraw
 class TrainDataEvaluator:
     """
     Helper class to evaluate MNIST training data (first 1000 samples),
-    extract Layer 1 geometric features (7x7), map them onto a 28x28 canvas,
+    extract Layer 1 geometric features (7x7), map them onto a 28x28 RGB canvas
+    (R: coordinates, G: concept, B: confidence, Brightness: RMS-based factor),
     export coordinates, top-3 concept labels, and confidence scores as JSON,
     and save them as grid images in chunks of 10.
     """
@@ -139,7 +140,7 @@ class TrainDataEvaluator:
     def _run_mapping_and_export(self, model, X_sub, y_sub, eval_samples):
         """
         Scans all samples, extracts spatial gradients for the nn.Linear(20, 64) input layer,
-        generates monochrome contrast images based on confidence scores and weighting formulas, and exports JSONs.
+        generates RGB-mapped contrast images using RMS-based luminance and component ratios, and exports JSONs.
         """
         extractor = model.extraction_layer
         
@@ -173,7 +174,7 @@ class TrainDataEvaluator:
                 pred_label = int(outputs.argmax(dim=1).item())
 
                 # 2. Extract input tensor of the Linear layer, enable gradients, and backpropagate
-                canvas_np = np.zeros((28, 28), dtype=np.float32)
+                canvas_rgb = np.zeros((28, 28, 3), dtype=np.float32)
                 detected_concepts_info = []
                 
                 parsed_boxes = []
@@ -253,7 +254,7 @@ class TrainDataEvaluator:
                 if max_pos_in_image == 0: max_pos_in_image = 1.0
                 if max_concept_in_image == 0: max_concept_in_image = 1.0
 
-                # --- Map scores to the canvas using specific weighting formulas ---
+                # --- Map scores to the RGB canvas using RMS-based mathematical formula ---
                 for box in parsed_boxes:
                     x1, y1, x2, y2 = box["x1"], box["y1"], box["x2"], box["y2"]
                     max_box_grad = box["max_box_grad"]
@@ -297,25 +298,37 @@ class TrainDataEvaluator:
                             pos_ratio = max_box_grad / max_pos_in_image
                             concept_ratio = max_concept_grad / max_concept_in_image
 
-                            weighted_grad = (pos_ratio * 0.4) + (concept_ratio * 0.6)
-
                             if top1_conf >= 0.70:
                                 conf_score = 1.0
                             else:
                                 conf_score = top1_conf ** 2
 
-                            raw_score = weighted_grad * conf_score
+                            # 各チャネルへの基本割り当て (R: 座標, G: 概念, B: 信頼度)
+                            patch_r = resized_patch * pos_ratio
+                            patch_g = resized_patch * concept_ratio
+                            patch_b = resized_patch * conf_score
 
-                            patch_gray = resized_patch * raw_score
+                            # マジックナンバーを排除した純粋な数式（二乗平均平方根: RMS による黒潰れ防止の輝度算出）
+                            luminance_factor = np.sqrt((patch_r**2 + patch_g**2 + patch_b**2) / 3.0)
 
-                            sub_canvas = canvas_np[iy1:iy2, ix1:ix2]
-                            canvas_np[iy1:iy2, ix1:ix2] = np.maximum(sub_canvas, patch_gray)
+                            # 色味を保持しつつ輝度を反映
+                            patch_color_r = resized_patch * pos_ratio * luminance_factor
+                            patch_color_g = resized_patch * concept_ratio * luminance_factor
+                            patch_color_b = resized_patch * conf_score * luminance_factor
+
+                            sub_canvas_r = canvas_rgb[iy1:iy2, ix1:ix2, 0]
+                            sub_canvas_g = canvas_rgb[iy1:iy2, ix1:ix2, 1]
+                            sub_canvas_b = canvas_rgb[iy1:iy2, ix1:ix2, 2]
+
+                            canvas_rgb[iy1:iy2, ix1:ix2, 0] = np.maximum(sub_canvas_r, patch_color_r)
+                            canvas_rgb[iy1:iy2, ix1:ix2, 1] = np.maximum(sub_canvas_g, patch_color_g)
+                            canvas_rgb[iy1:iy2, ix1:ix2, 2] = np.maximum(sub_canvas_b, patch_color_b)
 
                 # Prepare visualization images
                 raw_img_pil = Image.fromarray((img_np * 255).astype(np.uint8)).convert("RGB")
-                geo_canvas_small = Image.fromarray(np.clip(canvas_np * 255.0, 0, 255).astype(np.uint8))
+                geo_canvas_small = Image.fromarray(np.clip(canvas_rgb * 255.0, 0, 255).astype(np.uint8), mode="RGB")
                 
-                geo_canvas = geo_canvas_small.resize((112, 112), Image.Resampling.NEAREST).convert("RGB")
+                geo_canvas = geo_canvas_small.resize((112, 112), Image.Resampling.NEAREST)
                 raw_resized = raw_img_pil.resize((112, 112), Image.Resampling.NEAREST)
 
                 batch_records.append({
