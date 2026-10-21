@@ -1,4 +1,5 @@
 # Concept XAI: Concept-Embedded Explainable AI Model
+<img width="890" height="475" alt="grid_batch_010" src="https://github.com/user-attachments/assets/69d6aac7-9401-4f3c-8689-777c3f5d646e" />
 
 This is a prototype implementation of a Concept-Embedded Explainable AI (XAI) model designed to solve the ultimate dilemma of conventional deep learning: "We know *Where* it looked, but we don't know *What* it saw."
 
@@ -224,6 +225,7 @@ Mapping & Exporting: 100%|██████████████████
 
 [日本語版Readme]
 # Concept XAI: 概念埋め込み型・解釈可能AIモデル
+<img width="890" height="475" alt="grid_batch_010" src="https://github.com/user-attachments/assets/dc0fbc90-a398-426e-a339-7d4b6f3e8b51" />
 
 従来のディープラーニングが抱える最大のジレンマである「Where?（どこを見たか）は分かっても、What?（何を見たのか）が分からない」というブラックボックス問題を解決するための、幾何学的概念埋め込み型・解釈可能AI（XAI）のプロトタイプ実装です。
 
