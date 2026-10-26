@@ -7,8 +7,7 @@ While achieving a 91% test accuracy on the MNIST dataset, this model combines ba
 
 ## 💡 Background & Motivation
 In mission-critical fields such as medical diagnosis and infrastructure/machinery failure detection, applying black-box deep learning models directly is unacceptable due to the high risk of misclassification.
-- Limitations of Conventional DL: While techniques like Grad-CAM can show where the image was observe<img width="890" height="475" alt="grid_batch_001" src="https://github.com/user-attachments/assets/6f4484cb-944a-4adc-b06d-70b86ce76210" />
-d, there is no direct mechanism to decode whether the extracted features correspond to meaningful shapes (What). Even with standard DL where BP identifies important weight positions, the exact semantic meaning of those weights remains unknown.
+- Limitations of Conventional DL: While techniques like Grad-CAM can show where the image was observed, there is no direct mechanism to decode whether the extracted features correspond to meaningful shapes (What). Even with standard DL where BP identifies important weight positions, the exact semantic meaning of those weights remains unknown.
 - Black-box Internal Reasoning: Traditionally, the internal logical process of deep learning—such as determining that an image represents the digit "1" because it contains two consecutive vertical bars—has been completely opaque to human observers.
 
 ## Core Approach & Key Findings
@@ -112,11 +111,6 @@ Enter choice:
 - [3]: Test and evaluate the MNIST classification model (achieves 91% accuracy)
 - [4]: Evaluate training data, map gradients, and output grid images and JSON files
 - [9]: Initialize (reset) all checkpoints and caches
-
-## 🗺️ Future Prospects
-- Medical Image Diagnosis: Detecting lesions based on strict morphological evidence required by physicians (such as specific contours or closed-loop structures) in cellular images and tissue scans.
-- Industrial & Medical Equipment Fault Diagnosis: Defining micro-fracture or anomaly patterns in mechanical parts and biological tissues as "constructive geometric concepts" to predict failures with evidence.
-- Dynamic Module Extension: Developing an adaptive AI foundation where upper-layer concept filters can be dynamically switched and extended depending on the diagnostic target.
 
 ## Execution result
 ### Geometric Concept Model Training
@@ -225,6 +219,18 @@ Mapping & Exporting:   3%|█▋                                                
  * * * *
 Mapping & Exporting: 100%|█████████████████████████████████████████████████████████| 1000/1000 [00:26<00:00, 38.39it/s]
 </code>
+
+## 💡 Discussion: Implications and Limitations
+Through this verification, we demonstrated that embedding pre-defined geometric concepts enables an AI model to maintain reasonable classification accuracy (~91%) while providing human-interpretable reasoning for its decisions.
+
+However, this approach also highlights several structural challenges:
+
+Comparison with Classical Methods: For detecting simple geometric primitives (such as lines or L-shapes), classical image processing and feature extraction techniques (e.g., Hough transforms, template matching) often achieve higher accuracy and stability than a deep learning wrapper.
+
+The Scalability Bottleneck: Manually teaching and defining concepts for the model is effective for achieving interpretability and human-like structural reasoning. However, as target domains grow more complex and diverse, relying on humans to define all concepts is fundamentally non-scalable.
+
+Future work will need to move beyond manually engineered concept supervision toward scalable architectures where the AI can autonomously discover and define interpretable concepts while preserving transparency.
+
 
 [日本語版Readme]
 # Concept XAI: 概念埋め込み型・解釈可能AIモデル
@@ -456,3 +462,14 @@ Mapping & Exporting:   3%|█▋                                                
 ・・・
 Mapping & Exporting: 100%|█████████████████████████████████████████████████████████| 1000/1000 [00:26<00:00, 38.39it/s]
 </code>
+
+## 💡 考察：概念埋め込み型アプローチの意義と限界
+本検証により、事前に定義した幾何学的概念をモデルに埋め込むことで、一定の分類精度（約91%）を維持しながら、AIの判断根拠を人間にとって直感的に説明可能にできることが示されました。
+
+しかし一方で、本アプローチには構造的な課題も存在します。
+
+古典的手法との優位性の比較: 幾何学的なプリミティブ（直線やL字など）の検出だけであれば、ディープラーニングを使わずに、あらかじめ設計された古典的な画像処理・特徴量抽出手法（ハフ変換やテンプレートマッチング等）を用いた方が、より高い精度と安定性を実現できる可能性があります。
+
+スケーラビリティの壁: 人間が明示的に「概念（ルールや辞書）」を定義し、教え込んでいくアプローチは、説明可能性や人間らしい認知プロセス（構造的思考）を再現する上では有効ですが、対象とするドメインが複雑化・多様化した際に、**人間がすべての概念を定義し続けることはスケーラブルではない（スケール化が難しい）**という本質的な限界があります。
+
+今後は、人間が手動で概念を教え込むモデルから、AI自身が自律的に有用な概念を獲得・定義しつつ、かつその概念自体が解釈可能であるような、より拡張性の高いアプローチへの発展が求められます。
